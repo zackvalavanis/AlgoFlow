@@ -10,9 +10,11 @@ import (
 func main() {
 	cfg := config.Load()
 
-	client := algorand.NewClient("http://127.0.0.1:8080", "634f0c3859a505d41ed73e68ce29191183276470c29e8b375e552ee308f50fee")
+	// Connect to Algonode (MainNet) Indexer
+	algodClient := algorand.NewAlgodClient("https://mainnet-api.algonode.cloud", "")
+	indexerClient := algorand.NewIndexerClient("https://mainnet-idx.algonode.cloud", "")
 
-	router := api.NewRouter(cfg, client)
+	router := api.NewRouter(cfg, algodClient, indexerClient)
 	log.Printf("🚀 Server running on port %s", cfg.Port)
 	router.ListenAndServe()
 }

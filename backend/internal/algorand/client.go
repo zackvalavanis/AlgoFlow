@@ -1,25 +1,25 @@
 package algorand
 
 import (
-	"context"
-	"github.com/algorand/go-algorand-sdk/client/v2/algod"
+	"github.com/algorand/go-algorand-sdk/v2/client/v2/algod"
+	"github.com/algorand/go-algorand-sdk/v2/client/v2/indexer"
 	"log"
 )
 
-// NewClient creates a new Algorand SDK client
-func NewClient(addr, token string) *algod.Client {
-	client, err := algod.MakeClient(addr, token)
+// NewAlgodClient creates a new Algod client
+func NewAlgodClient(address, token string) *algod.Client {
+	client, err := algod.MakeClient(address, token)
 	if err != nil {
-		log.Fatalf("Failed to create Algorand client: %s", err)
+		log.Fatalf("failed to create algod client: %v", err)
 	}
 	return client
 }
 
-// GetNodeStatus fetches the current node status
-func GetNodeStatus(client *algod.Client) (interface{}, error) {
-	status, err := client.Status().Do(context.Background())
+// NewIndexerClient creates a new Indexer client
+func NewIndexerClient(address, token string) *indexer.Client {
+	client, err := indexer.MakeClient(address, token)
 	if err != nil {
-		return nil, err
+		log.Fatalf("failed to create indexer client: %v", err)
 	}
-	return status, nil
+	return client
 }
